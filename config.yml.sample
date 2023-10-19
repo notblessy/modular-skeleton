@@ -1,0 +1,2 @@
+env: "dev"
+http_port: 3000
