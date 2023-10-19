@@ -38,6 +38,5 @@ func runHTTP(cmd *cobra.Command, args []string) {
 
 	httpSvc.Router(e)
 
-	fmt.Println(config.HTTPPort())
 	logrus.Fatal(e.Start(fmt.Sprintf(":%d", config.HTTPPort())))
 }
