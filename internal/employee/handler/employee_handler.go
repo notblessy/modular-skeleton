@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/notblessy/model"
 	"github.com/notblessy/utils"
+	"github.com/sirupsen/logrus"
 )
 
 type Handler struct {
@@ -21,8 +22,11 @@ func NewHandler(ea model.EmployeeAction) *Handler {
 
 // FindAllHandler :nodoc:
 func (t *Handler) FindAllHandler(c echo.Context) error {
-	employee, err := t.employeeAction.FindAll(map[string]interface{}{})
+	logger := logrus.WithContext(c.Request().Context())
+
+	employee, err := t.employeeAction.FindAll(c, map[string]interface{}{})
 	if err != nil {
+		logger.Error(err.Error())
 		utils.Response(c, http.StatusInternalServerError, &utils.HTTPResponse{
 			Message: err.Error(),
 		})
@@ -35,8 +39,11 @@ func (t *Handler) FindAllHandler(c echo.Context) error {
 
 // CreateHandler :nodoc:
 func (t *Handler) CreateHandler(c echo.Context) error {
-	err := t.employeeAction.Create(model.Employee{})
+	logger := logrus.WithContext(c.Request().Context())
+
+	err := t.employeeAction.Create(c, model.Employee{})
 	if err != nil {
+		logger.Error(err.Error())
 		utils.Response(c, http.StatusInternalServerError, &utils.HTTPResponse{
 			Message: err.Error(),
 		})

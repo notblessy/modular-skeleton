@@ -31,3 +31,8 @@ func Env() string {
 func HTTPPort() int {
 	return viper.GetInt("http_port")
 }
+
+// LogLevel :nodoc:
+func LogLevel() string {
+	return viper.GetString("log_level")
+}

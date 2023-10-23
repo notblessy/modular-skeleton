@@ -1,15 +1,17 @@
 package model
 
+import "github.com/labstack/echo/v4"
+
 // EmployeeRepository :nodoc:
 type EmployeeRepository interface {
-	Create(employee Employee) error
-	FindAll(query map[string]interface{}) (Employee, error)
+	Create(ctx echo.Context, employee Employee) error
+	FindAll(ctx echo.Context, query map[string]interface{}) (Employee, error)
 }
 
 // EmployeeAction :nodoc:
 type EmployeeAction interface {
-	Create(employee Employee) error
-	FindAll(query map[string]interface{}) (Employee, error)
+	Create(ctx echo.Context, employee Employee) error
+	FindAll(ctx echo.Context, query map[string]interface{}) (Employee, error)
 }
 
 // Employee :nodoc:

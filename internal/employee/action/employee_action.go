@@ -1,7 +1,9 @@
 package action
 
 import (
+	"github.com/labstack/echo/v4"
 	"github.com/notblessy/model"
+	"github.com/sirupsen/logrus"
 )
 
 type employeeAction struct {
@@ -18,16 +20,28 @@ func NewEmployeeAction(er model.EmployeeRepository, ar model.AdminRepository) mo
 }
 
 // Create :nodoc:
-func (a *employeeAction) Create(req model.Employee) error {
-	_, err := a.adminRepo.FindAll(map[string]interface{}{})
+func (a *employeeAction) Create(ctx echo.Context, req model.Employee) error {
+	logger := logrus.WithContext(ctx.Request().Context()).
+		WithField("request", req)
+
+	_, err := a.adminRepo.FindAll(ctx, map[string]interface{}{})
 	if err != nil {
+		logger.Error(err.Error())
 		return err
 	}
 
-	return a.employeeRepo.Create(req)
+	return a.employeeRepo.Create(ctx, req)
 }
 
 // FindAll :nodoc:
-func (a *employeeAction) FindAll(req map[string]interface{}) (model.Employee, error) {
-	return a.employeeRepo.FindAll(req)
+func (a *employeeAction) FindAll(ctx echo.Context, req map[string]interface{}) (model.Employee, error) {
+	logger := logrus.WithContext(ctx.Request().Context()).
+		WithField("request", req)
+
+	employees, err := a.employeeRepo.FindAll(ctx, req)
+	if err != nil {
+		logger.Error(err.Error())
+		return model.Employee{}, err
+	}
+	return employees, nil
 }

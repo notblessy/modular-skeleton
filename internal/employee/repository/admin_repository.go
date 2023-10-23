@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/labstack/echo/v4"
 	"github.com/notblessy/model"
 	"gorm.io/gorm"
 )
@@ -17,11 +18,11 @@ func NewAdminRepository(db *gorm.DB) model.AdminRepository {
 }
 
 // Create :nodoc:
-func (a *adminRepository) Create(req model.Admin) error {
+func (a *adminRepository) Create(c echo.Context, req model.Admin) error {
 	return nil
 }
 
 // FindAll :nodoc:
-func (a *adminRepository) FindAll(req map[string]interface{}) (model.Admin, error) {
+func (a *adminRepository) FindAll(c echo.Context, req map[string]interface{}) (model.Admin, error) {
 	return model.Admin{}, nil
 }

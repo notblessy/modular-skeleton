@@ -1,15 +1,17 @@
 package model
 
+import "github.com/labstack/echo/v4"
+
 // AdminRepository :nodoc:
 type AdminRepository interface {
-	Create(admin Admin) error
-	FindAll(query map[string]interface{}) (Admin, error)
+	Create(ctx echo.Context, admin Admin) error
+	FindAll(ctx echo.Context, query map[string]interface{}) (Admin, error)
 }
 
 // AdminAction :nodoc:
 type AdminAction interface {
-	Create(admin Admin) error
-	FindAll(query map[string]interface{}) (Admin, error)
+	Create(ctx echo.Context, admin Admin) error
+	FindAll(ctx echo.Context, query map[string]interface{}) (Admin, error)
 }
 
 // Admin :nodoc:
